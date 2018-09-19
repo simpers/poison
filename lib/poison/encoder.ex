@@ -365,7 +365,13 @@ defimpl Poison.Encoder, for: [Date, Time, NaiveDateTime, DateTime] do
   alias Poison.Encoder
 
   def encode(value, options) do
-    Encoder.BitString.encode(@for.to_iso8601(value), options)
+    # Encoder.BitString.encode(@for.to_iso8601(value), options)
+    case Application.get_env(:poison, :datetime_formatter) do
+      nil ->
+        Encoder.BitString.encode(@for.to_iso8601(value), options)
+      formatter ->
+        Encoder.BitString.encode(formatter.format(value), options)
+    end
   end
 end
 
