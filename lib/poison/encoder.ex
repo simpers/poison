@@ -346,7 +346,7 @@ if Version.match?(System.version, ">=1.3.0-rc.1") do
         nil ->
           Poison.Encoder.BitString.encode(@for.to_iso8601(value), options)
         formatter ->
-          PoisonEncoder.BitString.encode(formatter.format(value), options)
+          Poison.Encoder.BitString.encode(formatter.format(value), options)
       end
     end
   end
